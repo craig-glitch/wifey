@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>to the love of my life💖</title>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ffb3ff, #b366ff);
+  overflow: hidden;
+  color: #001f7f;
+  text-align: center;
+  perspective: 1500px;
+}
+
+/* HEADINGS */
+h1 {
+  font-size: 2em;
+  margin-top: 0.5em;
+  color: #001f7f;
+  text-shadow: 1px 1px 5px #ffffff;
+  animation: glowText 2s infinite alternate;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin-top: 0.2em;
+  color: #001f7f;
+  text-shadow: 1px 1px 3px #ffffff;
+}
+
+/* SPINNER CONTAINER */
+.spinner-container {
+  width: 100vw;
+  height: 70vh;
+  margin-top: 0;
+  position: relative;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-container img {
+  width: 25vw;
+  max-width: 300px;
+  height: auto;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 0 50px #ff66cc;
+  transition: transform 0.3s ease;
+}
+
+/* LOVE MESSAGES */
+.messages {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  pointer-events: none;
+  color: #001f7f;
+}
+
+.messages p {
+  font-size: 1em;
+  line-height: 1.4em;
+  margin: 0.3em 0;
+  color: #001f7f;
+  text-shadow: 1px 1px 2px #ffffff;
+  animation: floatText 6s infinite alternate;
+}
+
+/* CUSTOM MUSIC BUTTON */
+.music-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff66cc, #ff3399);
+  box-shadow: 0 0 15px #ff66cc, 0 0 30px #ff3399;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite alternate;
+  z-index: 10;
+}
+
+.music-button::before {
+  content: '▶';
+  font-size: 1.8em;
+  color: white;
+  text-shadow: 0 0 10px #fff;
+  transition: transform 0.3s;
+}
+
+.music-button.playing::before {
+  content: '⏸';
+}
+
+/* PULSE ANIMATION */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 15px #ff66cc, 0 0 30px #ff3399; }
+  50% { transform: scale(1.1); box-shadow: 0 0 25px #ff66cc, 0 0 50px #ff3399; }
+  100% { transform: scale(1); box-shadow: 0 0 15px #ff66cc, 0 0 30px #ff3399; }
+}
+
+/* FLOATING HEARTS/IMAGES */
+.floating {
+  position: absolute;
+  font-size: 2em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+}
+</style>
+</head>
+<body>
+
+<h1>Happy Valentine's Day 💖</h1>
+<h2>to lorraine the love of my life</h2>
+
+<div class="spinner-container">
+  <img src="img1.jpg">
+  <img src="img2.jpg">
+  <img src="img3.jpg">
+  <img src="img4.jpg">
+  <img src="img5.jpg">
+  <img src="img6.jpg">
+  <img src="img7.jpg">
+  <img src="img8.jpg">
+  <img src="img9.jpg">
+  <img src="img10.jpg">
+</div>
+
+<div class="messages">
+  <p>Roses are red, violets are purple… My heart beats for you, Lorraine 💜</p>
+  <p>Every moment with you, Matthew, is a beautiful memory ❤️</p>
+  <p>Our love story sparkles brighter than the stars above 💖</p>
+  <p>Forever together, Lorraine & Matthew, bound by love 💕</p>
+  <p>You make my heart skip, my soul dance, and my world glow 🌟</p>
+</div>
+
+<!-- Floating hearts/images -->
+<div id="floatingContainer"></div>
+
+<!-- Hidden audio -->
+<audio id="audio" src="song.mp3" loop></audio>
+
+<!-- Custom music button -->
+<button class="music-button" id="musicBtn"></button>
+
+<script>
+// ---------------- 3D Circular Orbit ----------------
+const images = document.querySelectorAll('.spinner-container img');
+const numImages = images.length;
+let angle = 0;
+
+function animateCarousel() {
+  angle += 0.5;
+  const radius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
+  images.forEach((img, i) => {
+    const imgAngle = (i * 360 / numImages + angle) * Math.PI / 180;
+    const x = Math.cos(imgAngle) * radius;
+    const z = Math.sin(imgAngle) * radius;
+    const y = Math.sin(imgAngle * 2) * 40;
+    img.style.transform = `translateX(${x}px) translateY(${y}px) translateZ(${z}px)`;
+  });
+  requestAnimationFrame(animateCarousel);
+}
+animateCarousel();
+
+// ---------------- MUSIC BUTTON ----------------
+const audio = document.getElementById('audio');
+const musicBtn = document.getElementById('musicBtn');
+musicBtn.addEventListener('click', ()=>{
+  if(audio.paused){
+    audio.play();
+    musicBtn.classList.add('playing');
+  } else {
+    audio.pause();
+    musicBtn.classList.remove('playing');
+  }
+});
+
+// ---------------- FLOATING HEARTS/IMAGES ----------------
+const floatingContainer = document.getElementById('floatingContainer');
+const floatEmojis = ['💖','💞','💘','❤️','💓'];
+const floatingItems = [];
+
+for(let i=0;i<10;i++){
+  const f = document.createElement('div');
+  f.className = 'floating';
+  f.textContent = floatEmojis[i % floatEmojis.length];
+  f.style.left = Math.random()*window.innerWidth + 'px';
+  f.style.top = Math.random()*window.innerHeight + 'px';
+  floatingContainer.appendChild(f);
+  floatingItems.push({
+    el: f,
+    x: parseFloat(f.style.left),
+    y: parseFloat(f.style.top),
+    dx: (Math.random()-0.5)*2,
+    dy: (Math.random()-0.5)*2
+  });
+}
+
+function animateFloating(){
+  floatingItems.forEach(f=>{
+    f.x += f.dx;
+    f.y += f.dy;
+    // bounce off edges
+    if(f.x < 0 || f.x > window.innerWidth-30) f.dx *= -1;
+    if(f.y < 0 || f.y > window.innerHeight-30) f.dy *= -1;
+    f.el.style.left = f.x + 'px';
+    f.el.style.top = f.y + 'px';
+  });
+  requestAnimationFrame(animateFloating);
+}
+animateFloating();
+</script>
+
+</body>
+</html>
